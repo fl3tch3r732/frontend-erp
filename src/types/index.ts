@@ -28,12 +28,16 @@ export interface Module {
 export interface TimeSlot {
   id: number;
   title: string;
-  start: string;
-  end: string;
-  classroomId: number;
-  teacherId: number;
-  courseId: number;
+  start_time: string;
+  end_time: string;
+  classroom_id: number;
+  teacher_id: number;
+  course_id: number;
   color?: string;
+  course_name?: string;
+  teacher_name?: string;
+  classroom_name?: string;
+  created_at?: string;
 }
 
 export interface Classroom {

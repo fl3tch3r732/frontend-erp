@@ -9,6 +9,13 @@ export const modules: Module[] = [
     path: '/modules/timetable',
   },
   {
+    id: 'courses',
+    name: 'Gestion des Cours',
+    icon: 'book-open',
+    description: 'Création et gestion des cours et des programmes académiques.',
+    path: '/modules/courses',
+  },
+  {
     id: 'equipment',
     name: 'Gestion des Équipements',
     icon: 'laptop',

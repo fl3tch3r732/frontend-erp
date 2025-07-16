@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { User, AuthState } from '../types';
+import { authAPI } from '../services/api';
 
 interface AuthContextType extends AuthState {
-  login: (email: string, password: string, role: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const initialState: AuthState = {
   user: null,
@@ -12,54 +15,30 @@ const initialState: AuthState = {
   role: null,
 };
 
-const AuthContext = createContext<AuthContextType>({
-  ...initialState,
-  login: async () => false,
-  logout: () => {},
-});
-
-export const useAuth = () => useContext(AuthContext);
-
-// Mock user data for demonstration purposes
-const MOCK_USERS: User[] = [
-  {
-    id: 1,
-    name: 'Admin User',
-    email: 'admin@iutdouala.cm',
-    role: 'admin',
-  },
-  {
-    id: 2,
-    name: 'Teacher User',
-    email: 'teacher@iutdouala.cm',
-    role: 'teacher',
-    department: 'Computer Science',
-  },
-  {
-    id: 3,
-    name: 'Student User',
-    email: 'student@iutdouala.cm',
-    role: 'student',
-    department: 'Computer Science',
-  },
-];
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<AuthState>(initialState);
 
-  const login = async (email: string, password: string, role: string): Promise<boolean> => {
-    // In a real app, this would make an API call to your Laravel backend
+  const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      // For demo purposes, we'll use our mock data
-      const user = MOCK_USERS.find(
-        (u) => u.email === email && u.role === role
-      );
-
-      if (user) {
+      const response = await authAPI.login(email, password);
+      
+      if (response.user && response.token) {
+        // Store token in localStorage
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        
         setState({
-          user,
+          user: response.user,
           isAuthenticated: true,
-          role: user.role,
+          role: response.user.role,
         });
         return true;
       }
@@ -71,6 +50,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = () => {
+    // Clear localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setState(initialState);
   };
 
@@ -80,5 +62,3 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     </AuthContext.Provider>
   );
 };
-
-export default AuthContext;

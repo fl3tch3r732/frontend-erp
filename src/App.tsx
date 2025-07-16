@@ -8,6 +8,8 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import TimetablePage from './pages/modules/TimetablePage';
 import EquipmentPage from './pages/modules/EquipmentPage';
+import CoursesPage from './pages/modules/CoursesPage';
+import ClassesPage from './pages/modules/ClassesPage';
 
 // Protected route component
 interface ProtectedRouteProps {
@@ -59,17 +61,21 @@ function App() {
             }
           />
           
+          <Route
+            path="/modules/courses"
+            element={
+              <ProtectedRoute>
+                <CoursesPage />
+              </ProtectedRoute>
+            }
+          />
+          
           {/* Add placeholder routes for other modules */}
           <Route
             path="/modules/classrooms"
             element={
               <ProtectedRoute>
-                <DashboardLayout title="Gestion des Salles">
-                  <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-semibold mb-4">Module en développement</h2>
-                    <p>Le module de gestion des salles sera bientôt disponible.</p>
-                  </div>
-                </DashboardLayout>
+                <ClassesPage />
               </ProtectedRoute>
             }
           />
