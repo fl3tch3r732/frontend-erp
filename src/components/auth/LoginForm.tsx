@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('student');
+ // const [role, setRole] = useState('student');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
@@ -29,14 +29,14 @@ const LoginForm: React.FC = () => {
     
     try {
       setIsLoading(true);
-      const success = await login(email, password, role);
+      const success = await login(email, password);
       
       if (success) {
         navigate(redirectTo);
       } else {
         setError('Identifiants incorrects. Pour la démo, utilisez admin@iutdouala.cm, teacher@iutdouala.cm, ou student@iutdouala.cm');
       }
-    } catch (err) {
+    } catch {
       setError('Une erreur est survenue. Veuillez réessayer.');
     } finally {
       setIsLoading(false);
@@ -62,46 +62,6 @@ const LoginForm: React.FC = () => {
       )}
       
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-            Rôle
-          </label>
-          <div className="flex space-x-3">
-            <label className={`flex-1 flex items-center justify-center p-3 border rounded-md cursor-pointer ${role === 'admin' ? 'bg-primary-50 border-primary-500' : 'bg-white border-gray-300 hover:bg-gray-50'}`}>
-              <input
-                type="radio"
-                name="role"
-                value="admin"
-                checked={role === 'admin'}
-                onChange={() => setRole('admin')}
-                className="sr-only"
-              />
-              <span>Administrateur</span>
-            </label>
-            <label className={`flex-1 flex items-center justify-center p-3 border rounded-md cursor-pointer ${role === 'teacher' ? 'bg-primary-50 border-primary-500' : 'bg-white border-gray-300 hover:bg-gray-50'}`}>
-              <input
-                type="radio"
-                name="role"
-                value="teacher"
-                checked={role === 'teacher'}
-                onChange={() => setRole('teacher')}
-                className="sr-only"
-              />
-              <span>Enseignant</span>
-            </label>
-            <label className={`flex-1 flex items-center justify-center p-3 border rounded-md cursor-pointer ${role === 'student' ? 'bg-primary-50 border-primary-500' : 'bg-white border-gray-300 hover:bg-gray-50'}`}>
-              <input
-                type="radio"
-                name="role"
-                value="student"
-                checked={role === 'student'}
-                onChange={() => setRole('student')}
-                className="sr-only"
-              />
-              <span>Étudiant</span>
-            </label>
-          </div>
-        </div>
         
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -117,7 +77,7 @@ const LoginForm: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="pl-10 block w-full rounded-md border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-              placeholder={role === 'admin' ? 'admin@iutdouala.cm' : role === 'teacher' ? 'teacher@iutdouala.cm' : 'student@iutdouala.cm'}
+              placeholder={""}
             />
           </div>
         </div>
@@ -161,9 +121,9 @@ const LoginForm: React.FC = () => {
         <p>Pour la démo, utilisez ces identifiants:</p>
         <ul className="mt-1 space-y-1">
           <li><strong>Admin:</strong> admin@iutdouala.cm</li>
-          <li><strong>Enseignant:</strong> teacher@iutdouala.cm</li>
+          <li><strong>Enseignant:</strong> john.doe@iutdouala.cm</li>
           <li><strong>Étudiant:</strong> student@iutdouala.cm</li>
-          <li><strong>Mot de passe:</strong> N'importe quoi fonctionne</li>
+          <li><strong>Mot de passe:</strong> password123 pour le prof</li>
         </ul>
       </div>
     </div>
