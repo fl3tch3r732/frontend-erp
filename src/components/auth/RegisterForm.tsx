@@ -183,11 +183,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
             required
           >
             <option value="">Sélectionner un département</option>
-            <option value="informatique">Informatique</option>
-            <option value="genie-civil">Génie Civil</option>
-            <option value="electrotechnique">Électrotechnique</option>
-            <option value="gestion">Gestion</option>
-            <option value="maintenance">Maintenance Industrielle</option>
+            <option value="GI">Génie Informatique (GI)</option>
+            <option value="ASR">Administration Systèmes et Réseaux (ASR)</option>
+            <option value="GL">Génie Logiciel (GL)</option>
+            <option value="GRT">Réseaux et Télécommunications (GRT)</option>
           </select>
         </div>
       </div>

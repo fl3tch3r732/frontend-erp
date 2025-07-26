@@ -146,12 +146,10 @@ const CreateCourseForm: React.FC<CreateCourseFormProps> = ({ isOpen, onClose, on
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             >
               <option value="">Sélectionner un département</option>
-              <option value="Informatique">Informatique</option>
-              <option value="Mathématiques">Mathématiques</option>
-              <option value="Physique">Physique</option>
-              <option value="Chimie">Chimie</option>
-              <option value="Économie">Économie</option>
-              <option value="Gestion">Gestion</option>
+              <option value="GI">Génie Informatique (GI)</option>
+              <option value="ASR">Administration Systèmes et Réseaux (ASR)</option>
+              <option value="GL">Génie Logiciel (GL)</option>
+              <option value="GRT">Réseaux et Télécommunications (GRT)</option>
             </select>
           </div>
 

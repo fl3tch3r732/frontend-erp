@@ -10,6 +10,7 @@ import TimetablePage from './pages/modules/TimetablePage';
 import EquipmentPage from './pages/modules/EquipmentPage';
 import CoursesPage from './pages/modules/CoursesPage';
 import ClassesPage from './pages/modules/ClassesPage';
+import TeachersPage from './pages/modules/TeachersPage';
 
 // Protected route component
 interface ProtectedRouteProps {
@@ -84,12 +85,7 @@ function App() {
             path="/modules/teachers"
             element={
               <ProtectedRoute>
-                <DashboardLayout title="Gestion des Enseignants">
-                  <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-semibold mb-4">Module en développement</h2>
-                    <p>Le module de gestion des enseignants sera bientôt disponible.</p>
-                  </div>
-                </DashboardLayout>
+                <TeachersPage />
               </ProtectedRoute>
             }
           />

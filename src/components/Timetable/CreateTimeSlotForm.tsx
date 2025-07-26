@@ -11,7 +11,6 @@ interface CreateTimeSlotFormProps {
 
 const CreateTimeSlotForm: React.FC<CreateTimeSlotFormProps> = ({ isOpen, onClose, onTimeSlotCreated }) => {
   const [formData, setFormData] = useState({
-    title: '',
     startTime: '',
     endTime: '',
     date: '',
@@ -54,14 +53,14 @@ const CreateTimeSlotForm: React.FC<CreateTimeSlotFormProps> = ({ isOpen, onClose
     setLoading(true);
     setError(null);
 
-    console.log('Submitting time slot data:', formData);
-
     try {
       const startDateTime = `${formData.date}T${formData.startTime}`;
       const endDateTime = `${formData.date}T${formData.endTime}`;
-
+      // Find the selected course and use its name as the title
+      const selectedCourse = courses.find(c => c.id === parseInt(formData.courseId));
+      const timeSlotTitle = selectedCourse ? selectedCourse.name : '';
       const timeSlotData = {
-        title: formData.title,
+        title: timeSlotTitle,
         startTime: startDateTime,
         endTime: endDateTime,
         courseId: parseInt(formData.courseId),
@@ -69,15 +68,9 @@ const CreateTimeSlotForm: React.FC<CreateTimeSlotFormProps> = ({ isOpen, onClose
         classroomId: parseInt(formData.classroomId),
         color: formData.color
       };
-
-      console.log('Processed time slot data:', timeSlotData);
-
       const result = await timeSlotsAPI.create(timeSlotData);
-      console.log('Time slot created successfully:', result);
-      
       // Reset form
       setFormData({
-        title: '',
         startTime: '',
         endTime: '',
         date: '',
@@ -86,11 +79,9 @@ const CreateTimeSlotForm: React.FC<CreateTimeSlotFormProps> = ({ isOpen, onClose
         classroomId: '',
         color: '#0ea5e9'
       });
-      
       onTimeSlotCreated();
       onClose();
     } catch (err: any) {
-      console.error('Error creating time slot:', err);
       setError(err.message || 'Failed to create time slot');
     } finally {
       setLoading(false);
@@ -125,22 +116,6 @@ const CreateTimeSlotForm: React.FC<CreateTimeSlotFormProps> = ({ isOpen, onClose
               {error}
             </div>
           )}
-
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Titre du cours *
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              placeholder="Ex: Introduction à la Programmation"
-            />
-          </div>
 
           <div>
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">

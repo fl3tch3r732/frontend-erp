@@ -305,7 +305,7 @@ const ClassesPage: React.FC = () => {
                       <Clock size={14} className="mr-2" />
                       <span className="font-medium">Cours en cours</span>
                     </div>
-                    <p className="text-sm text-red-600 font-medium">{currentClass.title}</p>
+                    <p className="text-sm text-red-600 font-medium">{currentClass.course_name || currentClass.title}</p>
                     <p className="text-xs text-red-500">
                       {new Date(currentClass.start_time).toLocaleTimeString()} - {new Date(currentClass.end_time).toLocaleTimeString()}
                     </p>
@@ -318,7 +318,7 @@ const ClassesPage: React.FC = () => {
                       <Clock size={14} className="mr-2" />
                       <span className="font-medium">Prochain cours</span>
                     </div>
-                    <p className="text-sm text-blue-600 font-medium">{nextClass.title}</p>
+                    <p className="text-sm text-blue-600 font-medium">{nextClass.course_name || nextClass.title}</p>
                     <p className="text-xs text-blue-500">
                       {new Date(nextClass.start_time).toLocaleTimeString()} - {new Date(nextClass.end_time).toLocaleTimeString()}
                     </p>

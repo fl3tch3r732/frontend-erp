@@ -72,11 +72,15 @@ export const usersAPI = {
 export const teachersAPI = {
   getAll: () => apiCall('/teachers'),
   getById: (id: number) => apiCall(`/teachers/${id}`),
-  create: (teacherData: any) =>
-    apiCall('/teachers', {
+  getWithCourses: () => apiCall('/teachers/with-courses'),
+  create: (teacherData: any) => {
+    const token = localStorage.getItem('token');
+    return apiCall('/teachers', {
       method: 'POST',
       body: JSON.stringify(teacherData),
-    }),
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+  },
   update: (id: number, teacherData: any) =>
     apiCall(`/teachers/${id}`, {
       method: 'PUT',
